@@ -257,7 +257,7 @@ export function AssistantDock() {
                   <Bot className="size-4 text-signal" />
                 </span>
                 <div>
-                  <div className="text-[12.5px] text-white">SPHEREx Assistant</div>
+                  <div className="text-[12.5px] text-white">StellarScope SI</div>
                   <div className="text-[10px] text-white/40">Guides you and controls the sky</div>
                 </div>
               </div>
@@ -280,7 +280,7 @@ export function AssistantDock() {
         aria-label="Open assistant"
       >
         {busy ? <Loader2 className="size-4 animate-spin text-signal" /> : open ? <X className="size-4" /> : <MessageCircle className="size-4 text-signal" />}
-        <span className="hidden sm:inline">{open ? "Close" : "Ask AI"}</span>
+        <span className="hidden sm:inline">{open ? "Close" : "Ask SI"}</span>
       </button>
     </>
   );

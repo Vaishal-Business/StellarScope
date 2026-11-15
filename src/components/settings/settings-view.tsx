@@ -69,9 +69,9 @@ export function SettingsView() {
 
         <Reveal delay={0.22} className="mt-4">
           <Panel className="p-6">
-            <PanelHeader title={<span className="flex items-center gap-2"><Bot className="size-3.5" /> AI assistant</span>} />
+            <PanelHeader title={<span className="flex items-center gap-2"><Bot className="size-3.5" /> SI assistant (Super Intelligence)</span>} />
             <div className="mt-2">
-              <Toggle on={s.assistantDock} onChange={(v) => set({ assistantDock: v })} label="Floating assistant button" desc="Show the 'Ask AI' button on every page. The full assistant is always at /ai." />
+              <Toggle on={s.assistantDock} onChange={(v) => set({ assistantDock: v })} label="Floating assistant button" desc="Show the 'Ask SI' button on every page. The full assistant is always at /ai." />
             </div>
             <div className="mt-4">
               <div className="eyebrow mb-2">Model provider</div>

@@ -12,7 +12,7 @@ const display = Unbounded({ variable: "--font-display-face", subsets: ["latin"],
 export const metadata: Metadata = {
   title: "StellarScope — Citizen discovery on the infrared sky",
   description:
-    "Explore NASA SPHEREx DR1's 102-channel all-sky infrared survey, investigate real tiles, run AI-assisted analysis and contribute verifiable discoveries.",
+    "Explore NASA SPHEREx DR1's 102-channel all-sky infrared survey, investigate real tiles, run Super Intelligence (SI) analysis and contribute verifiable discoveries.",
 };
 
 export const viewport: Viewport = { themeColor: "#0b0c0f" };

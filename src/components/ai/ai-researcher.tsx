@@ -35,7 +35,7 @@ export function AiResearcher() {
                 <Sparkles className="size-4 text-signal" />
               </span>
               <div>
-                <div className="text-[13px] text-white">AI Researcher</div>
+                <div className="text-[13px] text-white">SI Researcher</div>
                 <div className="text-[10.5px] text-white/40">Knows the site, the sky and the data</div>
               </div>
             </div>

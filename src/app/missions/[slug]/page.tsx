@@ -17,3 +17,6 @@ export default async function Page({ params }: PageProps<"/missions/[slug]">) {
   if (!m) notFound();
   return <MissionFlow mission={m} />;
 }
+
+/** Params resolve per request; render as a blocking route. */
+export const instant = false;

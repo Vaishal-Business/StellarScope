@@ -17,3 +17,6 @@ export default async function Page({ params }: PageProps<"/discoveries/[slug]">)
   if (!obj) notFound();
   return <ObjectView obj={obj} />;
 }
+
+/** Params resolve per request; render as a blocking route. */
+export const instant = false;

@@ -11,6 +11,7 @@ import { CommandProvider } from "@/components/shell/command";
 import { SessionProvider } from "@/lib/session";
 import { AssistantDock, AssistantProvider } from "@/components/assistant/assistant";
 import { readSettings } from "@/lib/settings";
+import { MobileGate } from "@/components/shell/mobile-gate";
 
 type Phase = "boot" | "intro" | "splash" | "ready";
 
@@ -34,6 +35,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <Theme theme={themes[defaultThemeSlug]} mode="dark">
+      <MobileGate />
       <SessionProvider>
         <SplashReady.Provider value={phase === "ready"}>
           <CommandProvider>

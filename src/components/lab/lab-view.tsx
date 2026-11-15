@@ -107,7 +107,7 @@ export function LabView() {
           <RevealInView delay={0.05}>
             <Panel className="h-full p-5">
               <PanelHeader title={<span className="flex items-center gap-2"><Brain className="size-3.5" /> Spectral Scout runs</span>} meta={runs.data?.runs.length ?? 0} />
-              {runs.data?.runs.length === 0 && <p className="mt-4 text-[12px] text-white/45">No runs yet. Open any tile&apos;s Scout tab or the AI Engine page.</p>}
+              {runs.data?.runs.length === 0 && <p className="mt-4 text-[12px] text-white/45">No runs yet. Open any tile&apos;s Scout tab or the SI Engine page.</p>}
               <div className="mt-4 space-y-2">
                 {runs.data?.runs.map((r) => {
                   const s = JSON.parse(r.summary_json) as { bestWavelengthUm?: number; anomalyGlobal?: number; trackProb?: number };

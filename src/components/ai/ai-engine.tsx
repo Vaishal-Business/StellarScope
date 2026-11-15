@@ -51,8 +51,8 @@ export function AiEngine() {
       <div className="px-5 md:px-8">
         <Reveal delay={0.1}>
           <SectionTitle
-            eyebrow="AI Research Engine · Spectral Scout v2"
-            title="A custom model that reads all 102 channels"
+            eyebrow="SI Research Engine · Spectral Scout v2"
+            title="Our custom SI model that reads all 102 channels"
             desc="Runs only when you ask. It builds a 4-epoch input from real SPHEREx L2 exposures at your target, then the ONNX model — in your browser — chooses the most useful channels and scores spectral anomalies, motion and artefacts."
             right={card ? <LiveTag>{card.model_version} · {card.parameters.toLocaleString()} params</LiveTag> : undefined}
           />

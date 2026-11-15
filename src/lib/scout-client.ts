@@ -183,21 +183,21 @@ export function narrate(o: Outputs, m: Measure, card: ModelCard) {
   const wl = card.channel_wavelengths_um;
   const ART = card.artifact_classes;
   const used = [...Array(C).keys()].filter((c) => o.channels_used[c] > 0.5);
-  const ev = (c: number) => `(evidence: channel ${c} at ${wl[c].toFixed(2)} Âµm, epoch ${m.peakEpoch[c]}, S/N ${Number.isFinite(m.peak[c]) ? m.peak[c].toFixed(1) : "â€”"})`;
-  const L = [`model ${card.model_version} Â· ${o.ms[0]} ms`, `channels used ${used.length}/${C}, epochs used ${o.epochs_used.filter((v) => v > 0.5).length}/${E}`];
+  const ev = (c: number) => `(evidence: channel ${c} at ${wl[c].toFixed(2)} µm, epoch ${m.peakEpoch[c]}, S/N ${Number.isFinite(m.peak[c]) ? m.peak[c].toFixed(1) : "—"})`;
+  const L = [`model ${card.model_version} · ${o.ms[0]} ms`, `channels used ${used.length}/${C}, epochs used ${o.epochs_used.filter((v) => v > 0.5).length}/${E}`];
   if (o.incomplete[0] > 0.5) L.push("incomplete_reasoning = true (fewer than 2 epochs or fewer than 20 channels): show data, do not rank.");
   if (!used.length) return L;
   const top = used.slice().sort((a, b) => o.channel_weights[b] - o.channel_weights[a]).slice(0, 3);
-  for (const c of top) L.push(`[channel] ${c} (${wl[c].toFixed(2)} Âµm) weight ${o.channel_weights[c].toFixed(2)} ${ev(c)}`);
+  for (const c of top) L.push(`[channel] ${c} (${wl[c].toFixed(2)} µm) weight ${o.channel_weights[c].toFixed(2)} ${ev(c)}`);
   const ca = used.reduce((a, b) => (o.anomaly_scores[b] > o.anomaly_scores[a] ? b : a));
-  L.push(`[anomaly] global ${o.anomaly_global[0].toFixed(2)} (flag if â‰¥ ${T.anomaly_global.toFixed(2)}: ${o.anomaly_global[0] >= T.anomaly_global}); strongest channel ${ev(ca)}`);
+  L.push(`[anomaly] global ${o.anomaly_global[0].toFixed(2)} (flag if ≥ ${T.anomaly_global.toFixed(2)}: ${o.anomaly_global[0] >= T.anomaly_global}); strongest channel ${ev(ca)}`);
   const tp = o.track_prob[0];
   const flag = tp >= T.track_prob;
-  L.push(`[motion] track probability ${tp.toFixed(2)} (candidate if â‰¥ ${T.track_prob.toFixed(2)}: ${flag}); moving stack S/N ${o.stack_snr[0].toFixed(1)} vs static ${o.static_snr[0].toFixed(1)}`);
+  L.push(`[motion] track probability ${tp.toFixed(2)} (candidate if ≥ ${T.track_prob.toFixed(2)}: ${flag}); moving stack S/N ${o.stack_snr[0].toFixed(1)} vs static ${o.static_snr[0].toFixed(1)}`);
   if (flag) {
     const P = o.positions;
     const pos = [...Array(E).keys()].filter((e) => o.epochs_used[e] > 0.5).map((e) => `e${e}:(${P[2 * e].toFixed(1)}, ${P[2 * e + 1].toFixed(1)})`).join(" ");
-    L.push(`   rate ${o.rate[0].toFixed(2)} px/epoch = ${(o.rate[0] * PIX_ARCSEC).toFixed(1)}â€³/epoch, angle ${o.position_angle[0].toFixed(0)}Â° (pixel frame), positions ${pos}`);
+    L.push(`   rate ${o.rate[0].toFixed(2)} px/epoch = ${(o.rate[0] * PIX_ARCSEC).toFixed(1)}″/epoch, angle ${o.position_angle[0].toFixed(0)}° (pixel frame), positions ${pos}`);
     L.push(`   alternative: static or blended source (static stack S/N ${o.static_snr[0].toFixed(1)})`);
   }
   const order = [...ART.keys()].sort((a, b) => o.artifact_probs[b] - o.artifact_probs[a]);
@@ -238,10 +238,10 @@ export async function runScout(
   onProgress: (msg: string, frac: number) => void,
   signal?: AbortSignal,
 ): Promise<ScoutResult> {
-  onProgress("Loading Spectral Scout v2 modelâ€¦", 0);
+  onProgress("Loading Spectral Scout v2 model…", 0);
   const [card] = (await Promise.all([loadCard(), loadSession()])) as [ModelCard, unknown];
   const input = await fetchInput(ra, dec, (m, f) => onProgress(m, f * 0.92), signal);
-  onProgress(`Running inference on ${input.planes.length} real epoch-channel planesâ€¦`, 0.94);
+  onProgress(`Running inference on ${input.planes.length} real epoch-channel planes…`, 0.94);
   const t = assemble(input);
   const outputs = await runModel(t);
   const m = measure(t);

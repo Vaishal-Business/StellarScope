@@ -196,7 +196,7 @@ export function RegionView({ order, ipix }: { order: number; ipix: number }) {
                 <PanelHeader title="Next steps" />
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {[
-                    { icon: Brain, t: "Spectral Scout", s: "Run the custom model", href: `/ai/engine?tile=${order}/${ipix}` },
+                    { icon: Brain, t: "Spectral Scout", s: "Run our custom SI model", href: `/ai/engine?tile=${order}/${ipix}` },
                     { icon: FlaskConical, t: "Spectral Lab", s: "Explore wavelengths", href: "#spectral" },
                     { icon: Rocket, t: "Start Mission", s: "Investigate a target", href: `/missions/infrared-detective?tile=${order}/${ipix}` },
                     { icon: BookOpen, t: "Region Guide", s: "Learn what is here", href: "#guide" },

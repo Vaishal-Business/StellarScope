@@ -54,7 +54,7 @@ export function LearnIndex() {
         <RevealInView className="mt-12">
           <Panel className="grid gap-4 p-6 md:grid-cols-3">
             {[
-              ["Beginner", "Visual source discovery · guided identification · AI-assisted exploration · basic lessons"],
+              ["Beginner", "Visual source discovery · guided identification · SI-assisted exploration · basic lessons"],
               ["Advanced", "Spectral investigations · multi-visit analysis · anomaly investigation · motion analysis"],
               ["Researcher", "Custom data queries · FITS & calibrated products · custom models · reproducible notebooks"],
             ].map(([h, p]) => (
@@ -164,7 +164,7 @@ function Widget({ m }: { m: Module }) {
     <Panel className="p-5">
       <PanelHeader title="The path from candidate to discovery" />
       <div className="mt-4 grid gap-2 md:grid-cols-5">
-        {["AI prioritises", "Contributor investigates", "Evidence submitted", "Peers reproduce", "Atlas entry with provenance"].map((s, i) => (
+        {["SI prioritises", "Contributor investigates", "Evidence submitted", "Peers reproduce", "Atlas entry with provenance"].map((s, i) => (
           <div key={s} className="rounded-xl border border-white/[0.07] p-3">
             <span className="font-mono text-[10px] text-signal">0{i + 1}</span>
             <div className="mt-1 text-[12px] text-white">{s}</div>

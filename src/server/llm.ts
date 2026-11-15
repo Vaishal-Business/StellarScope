@@ -58,7 +58,7 @@ export interface Completion {
 
 export async function chat(messages: ChatMessage[], tools: ToolDef[], prefer?: "ifm" | "nvidia" | "auto"): Promise<Completion> {
   const s = state();
-  if (!s.providers.length) throw new Error("No AI provider keys are configured on the server.");
+  if (!s.providers.length) throw new Error("No SI provider keys are configured on the server.");
   // Round-robin start point spreads load across both providers to stay under each rate limit.
   let order = [...s.providers];
   if (prefer && prefer !== "auto") order.sort((a) => (a.id === prefer ? -1 : 1));
@@ -101,5 +101,5 @@ export async function chat(messages: ChatMessage[], tools: ToolDef[], prefer?: "
       }
     }
   }
-  throw new Error(`All AI providers failed — ${errors.join("; ")}`);
+  throw new Error(`All SI providers failed — ${errors.join("; ")}`);
 }

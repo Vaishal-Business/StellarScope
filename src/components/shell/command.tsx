@@ -64,7 +64,7 @@ export function CommandProvider({ children }: { children: React.ReactNode }) {
     for (const n of NAV) {
       if (ql && n.label.toLowerCase().includes(ql)) out.push({ id: n.href, icon: <Compass className="size-4" />, title: n.label, sub: "Navigate", href: n.href });
     }
-    if (!ql) out.unshift({ id: "ai", icon: <Sparkles className="size-4" />, title: "Ask the AI Researcher", sub: "Natural-language questions about the sky", href: "/ai" });
+    if (!ql) out.unshift({ id: "ai", icon: <Sparkles className="size-4" />, title: "Ask the SI Researcher", sub: "Natural-language questions about the sky", href: "/ai" });
     return out.slice(0, 9);
   }, [q]);
 

@@ -17,3 +17,6 @@ export default async function Page({ params }: PageProps<"/learn/[slug]">) {
   if (!m) notFound();
   return <LearnModule m={m} />;
 }
+
+/** Params resolve per request; render as a blocking route. */
+export const instant = false;

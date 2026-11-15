@@ -14,7 +14,7 @@ export function AppShell({ children, className }: { children: React.ReactNode; c
         <footer className="relative z-10 mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.05] px-8 py-6 text-[11px] text-white/35">
           <span>Imagery & science data: NASA / Caltech-IPAC SPHEREx DR1 via IRSA. Catalogue overlay: d3-celestial (BSD-3).</span>
           <span>StellarScope · created by Vaishal Anil &amp; Parthiv — <a className="underline hover:text-white" href="https://www.spaceappschallenge.org/2026/find-a-team/the-abyss/" target="_blank" rel="noreferrer">Team The Abyss</a>, NASA Space Apps 2026</span>
-          <span className="font-mono uppercase tracking-[0.14em]">AI: IFM K2 Horizon · NVIDIA Nemotron · Spectral Scout v2 (ONNX)</span>
+          <span className="font-mono uppercase tracking-[0.14em]">SI: IFM K2 Horizon · NVIDIA Nemotron · Spectral Scout v2 (ONNX)</span>
         </footer>
       </div>
     </div>

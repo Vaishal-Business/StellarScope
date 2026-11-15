@@ -24,9 +24,9 @@ const rhoOph = { order: 3, ipix: ang2pix(3, 246.79, -24.54) };
 
 /** Dated milestones from the mission record and the DR1 HiPS metadata. */
 const TIMELINE = [
-  { title: "SPHEREx launch", sub: "Falcon 9 Â· Vandenberg", state: "complete" as const, time: "2025-03-11" },
+  { title: "SPHEREx launch", sub: "Falcon 9 · Vandenberg", state: "complete" as const, time: "2025-03-11" },
   { title: "DR1 survey window opens", sub: "HiPS t_min", state: "complete" as const, time: mjdToDate(HIPS.tMinMjd).toISOString().slice(0, 10) },
-  { title: "DR1 HiPS cube built", sub: "HipsGen v12.900 Â· 102 channels", state: "complete" as const, time: HIPS.releaseDate },
+  { title: "DR1 HiPS cube built", sub: "HipsGen v12.900 · 102 channels", state: "complete" as const, time: HIPS.releaseDate },
   { title: "Data Release 1 public", sub: "All-sky spectral cube", state: "progress" as const, time: "2026-11-12" },
 ];
 
@@ -75,7 +75,7 @@ export function HomeView() {
           </h1>
           <Reveal delay={0.58}>
             <p className="mt-6 max-w-md text-[15px] leading-relaxed text-white/60">
-              Step inside NASA SPHEREx&apos;s 102-colour infrared map of the entire sky. Investigate real tiles, let AI point you to
+              Step inside NASA SPHEREx&apos;s 102-colour infrared map of the entire sky. Investigate real tiles, let SI (Super Intelligence) point you to
               the interesting signals, and turn what you find into verifiable discoveries.
             </p>
           </Reveal>
@@ -89,11 +89,11 @@ export function HomeView() {
           </Reveal>
           <Reveal delay={0.78} className="mt-10 flex items-center gap-6 text-[11px] text-white/40">
             <span className="flex items-center gap-2">
-              <span className="font-mono text-white/80">0.75â€“5.0 Âµm</span> spectral range
+              <span className="font-mono text-white/80">0.75–5.0 µm</span> spectral range
             </span>
             <span className="h-3 w-px bg-white/10" />
             <span className="flex items-center gap-2">
-              <span className="font-mono text-white/80">6.2â€³</span> native pixels
+              <span className="font-mono text-white/80">6.2″</span> native pixels
             </span>
           </Reveal>
         </div>
@@ -118,7 +118,7 @@ export function HomeView() {
             <Link href={`/explore?tile=5/445`} className="glass block rounded-2xl px-4 py-3 transition hover:border-white/20">
               <div className="eyebrow">Target</div>
               <div className="display mt-1 text-[14px] text-white">SPX-5-00445</div>
-              <div className="mt-0.5 font-mono text-[10px] text-white/45">RA 04h 02m Â· Dec +51Â° 15â€²</div>
+              <div className="mt-0.5 font-mono text-[10px] text-white/45">RA 04h 02m · Dec +51° 15′</div>
             </Link>
           </Reveal>
           <Reveal delay={1.0} x={20} className="absolute bottom-[10%] left-0 hidden md:block">
@@ -126,8 +126,8 @@ export function HomeView() {
               <div className="flex items-center gap-2">
                 <LiveTag>All-sky cube</LiveTag>
               </div>
-              <div className="mt-2 font-mono text-[10.5px] text-white/55">R 3.293 Â· G 1.905 Â· B 0.848 Âµm</div>
-              <div className="mt-0.5 text-[10px] text-white/35">False-colour infrared Â· drag to spin</div>
+              <div className="mt-2 font-mono text-[10.5px] text-white/55">R 3.293 · G 1.905 · B 0.848 µm</div>
+              <div className="mt-0.5 text-[10px] text-white/35">False-colour infrared · drag to spin</div>
             </div>
           </Reveal>
         </div>
@@ -162,7 +162,7 @@ export function HomeView() {
             </Link>
             <div className="mt-3 text-[13px] text-white">{last ? "Pick up where you left off" : "Orion Molecular Cloud"}</div>
             <div className="mt-1 font-mono text-[10px] text-white/45">
-              {describeTile(cont.order, cont.ipix).sizeDeg.toFixed(2)}Â° tile Â· {describeTile(cont.order, cont.ipix).pixelScaleArcsec.toFixed(1)}â€³/px
+              {describeTile(cont.order, cont.ipix).sizeDeg.toFixed(2)}° tile · {describeTile(cont.order, cont.ipix).pixelScaleArcsec.toFixed(1)}″/px
             </div>
           </Panel>
         </Reveal>
@@ -177,7 +177,7 @@ export function HomeView() {
             <div className="mt-3 flex items-end justify-between gap-3">
               <div className="min-w-0">
                 <div className="truncate text-[13px] text-white">{next.title}</div>
-                <div className="mt-0.5 text-[11px] text-white/45">{next.kind} Â· {next.difficulty}</div>
+                <div className="mt-0.5 text-[11px] text-white/45">{next.kind} · {next.difficulty}</div>
               </div>
               <Link href={`/missions/${next.slug}`} className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white" aria-label="Open mission">
                 <ArrowUpRight className="size-4" />
@@ -188,7 +188,7 @@ export function HomeView() {
 
         <Reveal delay={0.99}>
           <Panel className="flex h-[300px] flex-col p-4">
-            <PanelHeader title="Spectral Scout" meta={<span className="text-signal">â— Live</span>} />
+            <PanelHeader title="Spectral Scout" meta={<span className="text-signal">● Live</span>} />
             <div className="relative mx-auto mt-2 aspect-square w-[170px]">
               {[1, 0.74, 0.48, 0.24].map((s) => (
                 <span key={s} className="absolute rounded-full border border-white/[0.09]" style={{ inset: `${(1 - s) * 50}%` }} />
@@ -203,8 +203,8 @@ export function HomeView() {
             </div>
             <div className="mt-auto flex items-end justify-between">
               <div>
-                <div className="text-[22px] font-light text-white">{stats ? stats.totals.scoutTiles : "â€“"}</div>
-                <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/45">Tiles screened Â· {stats?.totals.candidates ?? 0} cand.</div>
+                <div className="text-[22px] font-light text-white">{stats ? stats.totals.scoutTiles : "–"}</div>
+                <div className="text-[10.5px] uppercase tracking-[0.14em] text-white/45">Tiles screened · {stats?.totals.candidates ?? 0} cand.</div>
               </div>
               <Btn size="sm" href="/ai/engine">
                 View <ArrowUpRight className="size-3" />
@@ -254,9 +254,9 @@ export function HomeView() {
       <section id="platform" className="relative z-10 px-5 pt-16 md:px-8">
         <RevealInView>
           <SectionTitle
-            eyebrow="One universe Â· seven destinations"
+            eyebrow="One universe · seven destinations"
             title="Citizen-science discovery infrastructure, built around SPHEREx"
-            desc="The sky is the interface. AI is the scientific engine. Missions are the reason to come back."
+            desc="The sky is the interface. SI is the scientific engine. Missions are the reason to come back."
             right={<Btn href="/explore" variant="outline">Open the sky <ArrowUpRight className="size-3.5" /></Btn>}
           />
         </RevealInView>
@@ -284,7 +284,7 @@ export function HomeView() {
             <div className="flex items-center justify-between">
               <PanelHeader title="Featured in the infrared" />
               <Link href="/discoveries" className="text-[11px] text-white/50 hover:text-white">
-                Discovery atlas â†’
+                Discovery atlas →
               </Link>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -294,7 +294,7 @@ export function HomeView() {
                     <TileImage order={o.fov > 5 ? 3 : 4} ipix={ang2pix(o.fov > 5 ? 3 : 4, o.ra, o.dec)} className="absolute inset-0 transition-transform duration-[1.4s] group-hover:scale-110" />
                   </div>
                   <div className="mt-2 truncate text-[12.5px] text-white">{o.name}</div>
-                  <div className="truncate font-mono text-[10px] text-white/40">{o.ids[0]} Â· {o.category}</div>
+                  <div className="truncate font-mono text-[10px] text-white/40">{o.ids[0]} · {o.category}</div>
                 </Link>
               ))}
             </div>
@@ -315,7 +315,7 @@ export function HomeView() {
                   <span className="min-w-0">
                     <span className="block truncate text-[12.5px] text-white">{p.title}</span>
                     <span className="mt-0.5 block text-[10.5px] text-white/40">
-                      {p.author} Â· {timeAgo(p.created_at)}{p.tile_order !== null ? ` Â· SPX-${p.tile_order}-${p.tile_ipix}` : ""}
+                      {p.author} · {timeAgo(p.created_at)}{p.tile_order !== null ? ` · SPX-${p.tile_order}-${p.tile_ipix}` : ""}
                     </span>
                   </span>
                 </Link>
@@ -332,7 +332,7 @@ export function HomeView() {
                 <>
                   <MiniStat k="Verified finds" v={String(stats?.totals.verified ?? 0)} />
                   <MiniStat k="In review" v={String(stats?.totals.pendingReviews ?? 0)} />
-                  <button onClick={() => signIn("register")} className="text-left text-[12px] text-signal hover:underline">Join â†’</button>
+                  <button onClick={() => signIn("register")} className="text-left text-[12px] text-signal hover:underline">Join →</button>
                 </>
               )}
             </div>
@@ -370,14 +370,14 @@ const bento = (stats: StatsResponse | null) => [
     desc: "Guided investigations: brown dwarfs, variables, ices, anomalies and the Planet Nine coverage campaign.",
     href: "/missions",
     icon: Rocket,
-    header: <BentoStat a={String(MISSIONS.length)} b="missions" c={stats ? `${stats.totals.submissions} submissions Â· ${stats.totals.verified} verified` : "loadingâ€¦"} />,
+    header: <BentoStat a={String(MISSIONS.length)} b="missions" c={stats ? `${stats.totals.submissions} submissions · ${stats.totals.verified} verified` : "loading…"} />,
   },
   {
-    title: "Spectral Scout AI",
-    desc: "Your custom ONNX model weighs all 102 channels on real L2 cutouts, picks the best viewing channel and scores anomalies and motion â€” evidence, not verdicts.",
+    title: "Spectral Scout SI",
+    desc: "Our custom ONNX model weighs all 102 channels on real L2 cutouts, picks the best viewing channel and scores anomalies and motion — evidence, not verdicts.",
     href: "/ai/engine",
     icon: Brain,
-    header: <BentoStat a="102" b="channels weighed per run" c={stats ? `scout-2.0.0 Â· ${stats.totals.scoutRuns} runs so far` : "scout-2.0.0 Â· ONNX"} />,
+    header: <BentoStat a="102" b="channels weighed per run" c={stats ? `scout-2.0.0 · ${stats.totals.scoutRuns} runs so far` : "scout-2.0.0 · ONNX"} />,
   },
   {
     title: "Discovery atlas",
@@ -394,11 +394,11 @@ const bento = (stats: StatsResponse | null) => [
       </div>
     ),
   },
-  { title: "Community", desc: "Claim regions, peer-review evidence and build a reproducible contribution record.", href: "/community", icon: Users, header: <BentoStat a={String(stats?.totals.users ?? "â€“")} b="members" c={stats ? `${stats.totals.posts} threads Â· ${stats.totals.pendingReviews} awaiting review` : "loadingâ€¦"} /> },
-  { title: "My Lab", desc: "Saved regions, model runs, submissions and exportable results.", href: "/lab", icon: FlaskConical, header: <BentoStat a="JSON" b="exportable provenance" c="saved Â· runs Â· submissions" /> },
-  { title: "Learn the Universe", desc: "Interactive modules built on live data â€” from infrared vision to scientific verification.", href: "/learn", icon: GraduationCap, header: <BentoStat a="9" b="interactive modules" c="102 colours Â· spectra Â· noise" /> },
+  { title: "Community", desc: "Claim regions, peer-review evidence and build a reproducible contribution record.", href: "/community", icon: Users, header: <BentoStat a={String(stats?.totals.users ?? "–")} b="members" c={stats ? `${stats.totals.posts} threads · ${stats.totals.pendingReviews} awaiting review` : "loading…"} /> },
+  { title: "My Lab", desc: "Saved regions, model runs, submissions and exportable results.", href: "/lab", icon: FlaskConical, header: <BentoStat a="JSON" b="exportable provenance" c="saved · runs · submissions" /> },
+  { title: "Learn the Universe", desc: "Interactive modules built on live data — from infrared vision to scientific verification.", href: "/learn", icon: GraduationCap, header: <BentoStat a="9" b="interactive modules" c="102 colours · spectra · noise" /> },
   { title: "Planet Nine Control", desc: "Test predicted positions against real SPHEREx footprints: coverage, then detectability.", href: "/missions/planet-nine", icon: Radar, header: <BentoStat a="P9" b="coverage campaign" c={stats ? `${stats.missions["planet-nine"]?.claims ?? 0} tiles claimed` : "research challenge"} /> },
-  { title: "Science data", desc: "FITS IMAGE, NHITS and FLAGS planes read straight from IRSA with byte-range requests.", href: "/region/5/445#science", icon: Boxes, header: <BentoStat a="320 MB" b="per cube, ~1 MB read" c="IMAGE Â· NHITS Â· FLAGS" /> },
+  { title: "Science data", desc: "FITS IMAGE, NHITS and FLAGS planes read straight from IRSA with byte-range requests.", href: "/region/5/445#science", icon: Boxes, header: <BentoStat a="320 MB" b="per cube, ~1 MB read" c="IMAGE · NHITS · FLAGS" /> },
 ];
 
 function BentoStat({ a, b, c }: { a: string; b: string; c: string }) {
