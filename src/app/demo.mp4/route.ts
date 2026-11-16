@@ -3,7 +3,6 @@ import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
 
 const videoPath = `${process.cwd()}/demo.mp4`;
 
