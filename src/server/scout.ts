@@ -36,6 +36,8 @@ export interface ScoutPlane {
   obsId: string;
   collection: string;
   url: string;
+  /** SPHEREx geocentric position (km) when this exposure was taken. */
+  sc: [number, number, number] | null;
   image: string; // base64 float32 little-endian, 64×64, y = 0 south
   variance: string;
 }
@@ -128,7 +130,7 @@ export async function buildScoutInput(ra: number, dec: number, progress: (msg: s
             if (!prev || r.scale < prev.noise) {
               planes.set(key, {
                 e: job.e, c, wavelengthUm: cut.wavelengthUm, mjd: cut.mjd, detector: cut.detector, obsId: job.x.obsId,
-                collection: job.x.collection, url: job.x.accessUrl, image: b64(img), variance: b64(vari), noise: r.scale,
+                collection: job.x.collection, url: job.x.accessUrl, sc: cut.sc, image: b64(img), variance: b64(vari), noise: r.scale,
               });
             }
             epochMjd[job.e].push(cut.mjd);

@@ -205,6 +205,24 @@ export function LearnModule({ m }: { m: Module }) {
             </RevealInView>
           ))}
         </div>
+        {m.steps && (
+          <RevealInView className="mt-8">
+            <Panel className="p-6">
+              <div className="eyebrow text-signal/80">On StellarScope · step by step</div>
+              <ol className="mt-4 space-y-3">
+                {m.steps.map((st, i) => (
+                  <li key={i} className="flex gap-3 text-[13.5px] leading-relaxed text-white/70">
+                    <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-signal/40 font-mono text-[11px] text-signal">{i + 1}</span>
+                    <span>
+                      {st.t}
+                      {st.href && <Link href={st.href} className="ml-2 text-signal underline underline-offset-2">Open</Link>}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </Panel>
+          </RevealInView>
+        )}
         <RevealInView className="mt-10 flex items-center justify-between">
           <Btn variant="outline" href="/explore">Practise in the sky</Btn>
           <Btn variant="primary" href={`/learn/${next.slug}`}>Next: {next.title} <ArrowRight className="size-3.5" /></Btn>

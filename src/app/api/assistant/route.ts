@@ -39,6 +39,9 @@ PAGES (use navigate / fly_to / select_tile to take the user there):
 - /discoveries and /discoveries/<slug>: ${OBJECTS.map((o) => o.slug).join(", ")}. Each object page pulls a real spectrum from the cube.
 - /community: rooms, threads linked to tiles, peer-review queue, leaderboard (real database).
 - /lab: the user's saved regions, model runs, submissions, mission progress.
+- /blink: Blink Comparator — loads real multi-epoch SPHEREx L2 exposures for a position (?ra=&dec= or ?tile=order/ipix), blinks or differences epochs per band, auto-detects movers/variables, cross-matches Gaia DR3 + JPL asteroids, links NASA/IRSA tools.
+- /blink/academy: Blink Academy — skill trainer on known movers (Barnard's Star) and variables (R Draconis), live 3D SPHEREx orbit, history of blink discoveries, existing blink submissions.
+- /submit: Submit for review — composer that bundles blink evidence, cross-match, spectrum and a verification checklist.
 - /learn/<slug>: ${MODULES.map((m) => m.slug).join(", ")}.
 
 DATA FACTS: HiPS orders 0–5 (order 5 = 12,288 tiles, 12.9″/px HiPS pixels, 512×512 tiles); native detector pixels 6.15″. Frames 50/51 (≈2.40/2.45 µm) are blank. NHITS counts contributing input pixels, not visits. Science cubes are ~320 MB per order-5 tile.

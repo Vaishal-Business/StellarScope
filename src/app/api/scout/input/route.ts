@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   if (!Number.isFinite(ra) || !Number.isFinite(dec) || ra < 0 || ra >= 360 || Math.abs(dec) > 90) {
     return Response.json({ error: "ra/dec out of range" }, { status: 400 });
   }
-  const key = `${ra.toFixed(3)}:${dec.toFixed(3)}`;
+  const key = `v2:${ra.toFixed(3)}:${dec.toFixed(3)}`; // v2 adds spacecraft positions
   const enc = new TextEncoder();
   const stream = new ReadableStream({
     async start(ctrl) {

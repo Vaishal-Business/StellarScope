@@ -210,6 +210,8 @@ export interface L2Index {
   mjdAvg: number;
   detector: number;
   bunit: string;
+  /** Spacecraft geocentric position at mid-exposure (km), from X_SC/Y_SC/Z_SC. */
+  sc: [number, number, number] | null;
 }
 
 const indexCache = new Map<string, Promise<L2Index>>();
@@ -279,6 +281,7 @@ export function indexL2(url: string): Promise<L2Index> {
         mjdAvg: num(img.cards, "MJD-AVG", num(img.cards, "MJD-OBS")),
         detector: num(img.cards, "DETECTOR"),
         bunit: String(img.cards.find((c) => c.key === "BUNIT")?.value ?? ""),
+        sc: img.cards.some((c) => c.key === "X_SC") ? [num(img.cards, "X_SC"), num(img.cards, "Y_SC"), num(img.cards, "Z_SC")] : null,
       };
     })();
     p.catch(() => indexCache.delete(url));
@@ -389,5 +392,5 @@ export async function cutoutL2(url: string, ra: number, dec: number, band?: [num
     const alt = wavelengthAt(ix, cx, cy, true);
     wavelengthUm = alt >= band[0] * 0.97 && alt <= band[1] * 1.03 ? alt : NaN;
   }
-  return { image, variance, wavelengthUm, mjd: ix.mjdAvg, detector: ix.detector, pixel: [cx, cy] as [number, number], bunit: ix.bunit };
+  return { image, variance, wavelengthUm, mjd: ix.mjdAvg, detector: ix.detector, pixel: [cx, cy] as [number, number], bunit: ix.bunit, sc: ix.sc };
 }

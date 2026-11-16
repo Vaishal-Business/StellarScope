@@ -6,6 +6,7 @@ export interface Module {
   level: "Beginner" | "Intermediate" | "Advanced";
   widget: "colours" | "composite" | "spectrum" | "noise" | "motion" | "browndwarf" | "galaxy" | "coverage" | "verify";
   sections: { h: string; p: string }[];
+  steps?: { t: string; href?: string }[];
 }
 
 export const MODULES: Module[] = [
@@ -74,6 +75,61 @@ export const MODULES: Module[] = [
     sections: [
       { h: "Reproducibility", p: "A submission carries its data release, pixel, channels and model version so anyone can re-run it." },
       { h: "Independent review", p: "Peers re-measure; reviewers challenge with evidence; only consistent results enter the atlas — with their history attached." },
+    ],
+  },
+  {
+    slug: "blink-comparator", title: "Blink Comparator Hunting", learn: "Find moving and changing objects on StellarScope", minutes: 12, level: "Intermediate", widget: "motion",
+    sections: [
+      { h: "Why blinking works", p: "Your eye is extremely sensitive to change. Flip quickly between two images of the same sky taken at different times and anything that moved or changed brightness jumps out, while the thousands of static stars stay still." },
+      { h: "Epochs in SPHEREx", p: "SPHEREx revisits each part of the sky roughly every six months. StellarScope groups real L2 exposures into epochs and stacks them by inverse variance, so each blink frame is the deepest image available for that visit." },
+      { h: "Reading a difference image", p: "Difference mode shows epoch B minus epoch A in signal-to-noise units. A moving star leaves a blue (vanished) and red (appeared) pair; a variable leaves a single blob; noise looks like salt-and-pepper below about 5 sigma." },
+      { h: "Artefacts to distrust", p: "Residuals exactly at bright stars, on detector edges, or that appear in only one band are usually artefacts. Real movers appear in every band with the same offset." },
+    ],
+    steps: [
+      { t: "Open Blink and pick a preset (start with Barnard's Star) or type coordinates.", href: "/blink" },
+      { t: "Press 'Load real epochs'. The first load of a new position takes 1–2 minutes while IRSA cutouts download." },
+      { t: "Play the blink, then switch to Difference mode and choose the two most separated epochs." },
+      { t: "Turn on Auto-detect, keep the threshold at 5σ, and read the detection list: movers have a rate in arcsec/day." },
+      { t: "Click Cross-match to overlay Gaia DR3 stars and query JPL for known asteroids on each epoch date." },
+      { t: "If nothing known explains it, press Submit for review — your blink evidence is attached automatically." },
+    ],
+  },
+  {
+    slug: "train-your-eye", title: "Training With Blink Academy", learn: "Improve your detection skill on known answers", minutes: 6, level: "Beginner", widget: "motion",
+    sections: [
+      { h: "Practise where the answer is known", p: "The academy loads real SPHEREx fields around catalogued movers and variables. You click what changes and are scored against the catalogue position." },
+      { h: "Learn from others", p: "Existing blink submissions are listed so you can open them in the comparator and judge them yourself." },
+      { h: "Know your instrument", p: "The 3D orbit view shows where SPHEREx was for each exposure, which explains parallax for nearby objects and why some epochs differ." },
+    ],
+    steps: [
+      { t: "Open Blink Academy and pick 'Find the mover · Barnard's Star'.", href: "/blink/academy" },
+      { t: "Load the challenge, watch a few blinks, then click the object you think moved." },
+      { t: "Repeat with R Draconis (a variable) and watch your accuracy and XP rise." },
+    ],
+  },
+  {
+    slug: "choosing-channels", title: "Choosing Channels With Spectral Scout", learn: "Let our ONNX model pick the best view", minutes: 7, level: "Intermediate", widget: "spectrum",
+    sections: [
+      { h: "Why the channel matters", p: "Of 102 channels, a few show a region best: dust and ices absorb at 3.05 and 4.27 µm, PAH emission peaks at 3.3 µm, and stellar photospheres dominate below 1.6 µm." },
+      { h: "What Scout does", p: "Spectral Scout is our custom ONNX model. It reads real 102-channel cutouts and ranks channels by information content, entirely in your browser, only when you ask." },
+    ],
+    steps: [
+      { t: "Open Explore, click a tile, then press 'Run Spectral Scout' in the inspector.", href: "/explore" },
+      { t: "Inspect the top-ranked channels, and switch the sky view to the recommended one." },
+      { t: "Open the region page to read the full spectrum for any pixel." },
+    ],
+  },
+  {
+    slug: "cross-matching", title: "Cross-matching & Verification Tools", learn: "Rule out known objects before you submit", minutes: 9, level: "Advanced", widget: "verify",
+    sections: [
+      { h: "Gaia DR3", p: "Gaia gives positions and proper motions for over a billion stars. A residual at a Gaia star with high proper motion is a known mover, not a discovery." },
+      { h: "Solar-system objects", p: "JPL's Small-Body Identification service and the MPC's MPChecker list asteroids and comets in a field at a given date. Many SPHEREx movers will be asteroids." },
+      { h: "Literature and images", p: "SIMBAD, IRSA Viewer, Aladin Lite and WiseView let you check whether a source is catalogued and how it looks in WISE and 2MASS epochs." },
+    ],
+    steps: [
+      { t: "In Blink, press Cross-match; review Gaia markers and JPL counts." },
+      { t: "Use the official tool links (IRSA, SIMBAD, MPChecker, WiseView) to look deeper." },
+      { t: "On Submit for review, tick each verification step you completed, explain your reasoning, and submit.", href: "/submit" },
     ],
   },
 ];

@@ -42,17 +42,7 @@ export function HomeView() {
     <AppShell>
       {/* ================= HERO ================= */}
       <section className="relative grid min-h-[620px] grid-cols-[56px_1fr] gap-0 px-5 md:px-8 lg:grid-cols-[56px_minmax(0,1fr)_minmax(0,1.1fr)_96px]">
-        <video
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
-          src="/demo.mp4"
-          poster="/media/intro-poster.jpg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.16),transparent_38%),linear-gradient(180deg,rgba(6,10,18,0.28),rgba(6,10,18,0.78))]" />
+
         {/* left timeline rail */}
         <Reveal delay={0.2} className="relative hidden flex-col items-center py-10 md:flex">
           <div className="absolute inset-y-10 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/15 to-transparent" />
@@ -259,6 +249,18 @@ export function HomeView() {
             </div>
           </a>
         </Reveal>
+      </section>
+
+      {/* ================= DEMO ================= */}
+      <section id="demo" className="relative z-10 px-5 pt-16 md:px-8">
+        <RevealInView>
+          <SectionTitle eyebrow="Product demo · 30 s" title="See StellarScope in action" desc="A quick tour of the infrared sky, tile inspection, Spectral Scout SI and the blink comparator." />
+        </RevealInView>
+        <RevealInView delay={0.08} className="mt-8">
+          <div className="glass overflow-hidden rounded-[26px] p-2">
+            <video className="aspect-video w-full rounded-[20px] bg-black" src="/demo.mp4" poster="/media/demo-poster.jpg" controls playsInline preload="metadata" />
+          </div>
+        </RevealInView>
       </section>
 
       {/* ================= PLATFORM BENTO ================= */}

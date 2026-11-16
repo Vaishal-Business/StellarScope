@@ -31,7 +31,7 @@ export interface ScoutInputPayload {
   modelVersion: string;
   timestamps: number[];
   epochs: { index: number; mjdStart: number; mjdEnd: number; exposures: number; used: number }[];
-  planes: { e: number; c: number; wavelengthUm: number; mjd: number; detector: number; obsId: string; collection: string; url: string; image: string; variance: string }[];
+  planes: { e: number; c: number; wavelengthUm: number; mjd: number; detector: number; obsId: string; collection: string; url: string; sc?: [number, number, number] | null; image: string; variance: string }[];
   considered: number;
   attempted: number;
   failed: number;
