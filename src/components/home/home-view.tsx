@@ -33,7 +33,7 @@ const TIMELINE = [
 export function HomeView() {
   const next = MISSIONS[0];
   const { data: stats } = useStats();
-  const posts = useLive<{ posts: { id: number; title: string; author: string; created_at: number; tile_order: number | null; tile_ipix: number | null }[] }>("/api/posts?limit=3");
+  const posts = useLive<{ posts: { id: number; title: string; author: string; created_at: number; tile_order: number | null; tile_ipix: number | null }[] }> ("/api/posts?limit=3");
   const { user, stats: me, signIn } = useSession();
   const [last, setLast] = useState<{ order: number; ipix: number } | null>(null);
   useEffect(() => setLast(lastRegion()), []);
@@ -42,6 +42,17 @@ export function HomeView() {
     <AppShell>
       {/* ================= HERO ================= */}
       <section className="relative grid min-h-[620px] grid-cols-[56px_1fr] gap-0 px-5 md:px-8 lg:grid-cols-[56px_minmax(0,1fr)_minmax(0,1.1fr)_96px]">
+        <video
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
+          src="/demo.mp4"
+          poster="/media/intro-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.16),transparent_38%),linear-gradient(180deg,rgba(6,10,18,0.28),rgba(6,10,18,0.78))]" />
         {/* left timeline rail */}
         <Reveal delay={0.2} className="relative hidden flex-col items-center py-10 md:flex">
           <div className="absolute inset-y-10 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/15 to-transparent" />
@@ -51,7 +62,7 @@ export function HomeView() {
             <span className="h-3 w-px bg-white/40" />
           </div>
           <div className="relative mt-auto mb-8 flex flex-col items-center gap-3">
-            <Link href="/explore" className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white transition hover:border-white/40 hover:bg-white/10" aria-label="Enter the sky">
+            <Link href="/explore" className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white transition hover:border-white/40 hover:bg-white/[0.08]">
               <Play className="ml-0.5 size-4 fill-current" />
             </Link>
           </div>
@@ -179,7 +190,7 @@ export function HomeView() {
                 <div className="truncate text-[13px] text-white">{next.title}</div>
                 <div className="mt-0.5 text-[11px] text-white/45">{next.kind} · {next.difficulty}</div>
               </div>
-              <Link href={`/missions/${next.slug}`} className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/15 text-white/80 transition hover:border-white/40 hover:text-white" aria-label="Open mission">
+              <Link href={`/missions/${next.slug}`} className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/15 text-white/80 transition hover:border-white/40 hover:bg-white/[0.04]">
                 <ArrowUpRight className="size-4" />
               </Link>
             </div>
@@ -197,7 +208,7 @@ export function HomeView() {
               {[
                 [22, 30], [68, 22], [80, 58], [40, 72], [55, 44], [30, 55], [62, 80],
               ].slice(0, Math.min(7, stats?.totals.candidates ?? 0)).map(([x, y], i) => (
-                <motion.span key={i} className="absolute size-1.5 rounded-full bg-signal shadow-[0_0_10px_oklch(0.89_0.11_155)]" style={{ left: `${x}%`, top: `${y}%` }} animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.35 }} />
+                <motion.span key={i} className="absolute size-1.5 rounded-full bg-signal shadow-[0_0_10px_oklch(0.89_0.11_155)]" style={{ left: `${x}%`, top: `${y}%` }} animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.3, 1] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }} />
               ))}
               <span className="absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white" />
             </div>
@@ -220,7 +231,7 @@ export function HomeView() {
               <span className="absolute bottom-3 left-[7px] top-3 w-px bg-white/10" />
               {TIMELINE.map((t) => (
                 <div key={t.title} className="relative">
-                  <span className={cn("absolute -left-[22px] top-3 size-2.5 rounded-full border", t.state === "complete" ? "border-signal bg-signal/30" : t.state === "progress" ? "border-signal bg-signal" : "border-white/25 bg-transparent")} />
+                  <span className={cn("absolute -left-[22px] top-3 size-2.5 rounded-full border", t.state === "complete" ? "border-signal bg-signal/30" : t.state === "progress" ? "border-signal bg-signal/10" : "border-white/15 bg-white/10")} />
                   <div className={cn("flex items-center justify-between rounded-xl border px-3 py-2", t.state === "progress" ? "border-white/15 bg-white/[0.06]" : "border-white/[0.05] bg-white/[0.02]")}>
                     <div className="min-w-0">
                       <div className={cn("truncate text-[12px]", "text-white")}>{t.title}</div>
@@ -361,7 +372,7 @@ const bento = (stats: StatsResponse | null) => [
     header: (
       <div className="relative h-full min-h-[8rem] flex-1 overflow-hidden rounded-xl border border-white/[0.06]">
         <TileImage order={2} ipix={ang2pix(2, 266.4, -29)} className="absolute inset-0" gain={1.3} />
-        <div className="absolute inset-0 bg-[linear-gradient(transparent_49%,rgba(255,255,255,.12)_50%,transparent_51%),linear-gradient(90deg,transparent_49%,rgba(255,255,255,.12)_50%,transparent_51%)] bg-[size:25%_25%]" />
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_49%,rgba(255,255,255,.12)_50%,transparent_51%),linear-gradient(90deg,transparent_49%,rgba(255,255,255,.12)_50%,transparent_51%)]" />
       </div>
     ),
   },
@@ -394,16 +405,16 @@ const bento = (stats: StatsResponse | null) => [
       </div>
     ),
   },
-  { title: "Community", desc: "Claim regions, peer-review evidence and build a reproducible contribution record.", href: "/community", icon: Users, header: <BentoStat a={String(stats?.totals.users ?? "–")} b="members" c={stats ? `${stats.totals.posts} threads · ${stats.totals.pendingReviews} awaiting review` : "loading…"} /> },
-  { title: "My Lab", desc: "Saved regions, model runs, submissions and exportable results.", href: "/lab", icon: FlaskConical, header: <BentoStat a="JSON" b="exportable provenance" c="saved · runs · submissions" /> },
-  { title: "Learn the Universe", desc: "Interactive modules built on live data — from infrared vision to scientific verification.", href: "/learn", icon: GraduationCap, header: <BentoStat a="9" b="interactive modules" c="102 colours · spectra · noise" /> },
-  { title: "Planet Nine Control", desc: "Test predicted positions against real SPHEREx footprints: coverage, then detectability.", href: "/missions/planet-nine", icon: Radar, header: <BentoStat a="P9" b="coverage campaign" c={stats ? `${stats.missions["planet-nine"]?.claims ?? 0} tiles claimed` : "research challenge"} /> },
-  { title: "Science data", desc: "FITS IMAGE, NHITS and FLAGS planes read straight from IRSA with byte-range requests.", href: "/region/5/445#science", icon: Boxes, header: <BentoStat a="320 MB" b="per cube, ~1 MB read" c="IMAGE · NHITS · FLAGS" /> },
+  { title: "Community", desc: "Claim regions, peer-review evidence and build a reproducible contribution record.", href: "/community", icon: Users, header: <BentoStat a={String(stats?.totals.users ?? 0)} b="members" c={stats ? `${stats.totals.posts} community posts` : "syncing…"} /> },
+  { title: "My Lab", desc: "Saved regions, model runs, submissions and exportable results.", href: "/lab", icon: FlaskConical, header: <BentoStat a="JSON" b="exportable provenance" c="saved · run history" /> },
+  { title: "Learn the Universe", desc: "Interactive modules built on live data — from infrared vision to scientific verification.", href: "/learn", icon: GraduationCap, header: <BentoStat a="9" b="guided lessons" c="interactive + data-backed" /> },
+  { title: "Planet Nine Control", desc: "Test predicted positions against real SPHEREx footprints: coverage, then detectability.", href: "/missions/planet-nine", icon: Radar, header: <BentoStat a="1" b="mission path" c="coverage + detectability" /> },
+  { title: "Science data", desc: "FITS IMAGE, NHITS and FLAGS planes read straight from IRSA with byte-range requests.", href: "/region/5/445#science", icon: Boxes, header: <BentoStat a="320 MB" b="io per cube" c="byte-ranged access" /> },
 ];
 
 function BentoStat({ a, b, c }: { a: string; b: string; c: string }) {
   return (
-    <div className="relative flex h-full min-h-[8rem] flex-1 flex-col justify-end overflow-hidden rounded-xl border border-white/[0.06] bg-[radial-gradient(circle_at_80%_20%,oklch(0.89_0.11_155/0.12),transparent_60%)] p-4">
+    <div className="relative flex h-full min-h-[8rem] flex-1 flex-col justify-end overflow-hidden rounded-xl border border-white/[0.06] bg-[radial-gradient(circle_at_80%_20%,oklch(0.89_0.11_155/0.18),transparent_28%),linear-gradient(160deg,rgba(9,12,18,0.7),rgba(17,20,26,0.9))] p-4">
       <div className="display text-[34px] font-extralight text-white">{a}</div>
       <div className="text-[11px] uppercase tracking-[0.14em] text-white/50">{b}</div>
       <div className="mt-1 font-mono text-[10px] text-white/35">{c}</div>
@@ -411,4 +422,3 @@ function BentoStat({ a, b, c }: { a: string; b: string; c: string }) {
     </div>
   );
 }
-
