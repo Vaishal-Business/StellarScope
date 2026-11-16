@@ -10,6 +10,7 @@ import { SpectrumChart } from "@/components/sky/spectrum-chart";
 import { ChannelStrip } from "@/components/explore/spectral-dock";
 import { Btn, Chip, LiveTag, Panel, PanelHeader, SectionTitle } from "@/components/ui/kit";
 import { MODULES, type Module } from "@/lib/learn";
+import { WORKFLOWS, startWorkflow } from "@/lib/workflows";
 import { useJson, type ObservationsResponse, type SpectrumResponse } from "@/lib/hooks";
 import { cubePixel } from "@/lib/objects";
 import { ang2pix } from "@/sky/healpix";
@@ -26,6 +27,24 @@ export function LearnIndex() {
       <div className="px-5 md:px-8">
         <Reveal delay={0.1}>
           <SectionTitle eyebrow="Learn the Universe" title="Interactive lessons built on live SPHEREx data" desc="Every module uses real tiles and spectra from the platform. Essential explanations are always open; missions unlock deeper challenges." />
+        </Reveal>
+        <Reveal delay={0.14} className="mt-10">
+          <div className="eyebrow text-signal/80">Hands-on guided workflows · the coach does it with you</div>
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {WORKFLOWS.map((w) => (
+              <button key={w.id} onClick={() => startWorkflow(w.id)} className="glass group rounded-[20px] p-4 text-left transition hover:border-white/20">
+                <div className="flex items-center justify-between">
+                  <span className="text-[14px] text-white">{w.title}</span>
+                  <Chip tone="info">{w.level}</Chip>
+                </div>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-white/55">{w.goal}</p>
+                <div className="mt-3 flex items-center gap-2 font-mono text-[10.5px] text-signal">
+                  <GraduationCap className="size-3.5" /> {w.steps.length} steps · {w.minutes} min · Start <ArrowRight className="size-3" />
+                </div>
+              </button>
+            ))}
+          </div>
+          <p className="mt-3 text-[11.5px] text-white/40">Tip: you can also ask StellarScope SI — “teach me how to find a moving star” — and it will start the right workflow or do the steps for you.</p>
         </Reveal>
         <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {MODULES.map((m, i) => (

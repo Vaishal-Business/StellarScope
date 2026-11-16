@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { ArrowUpRight, BookOpen, Bookmark, Brain, ChevronRight, Compass, FlaskConical, Rocket, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpen, Clapperboard, GraduationCap, Bookmark, Brain, ChevronRight, Compass, FlaskConical, Rocket, Sparkles } from "lucide-react";
 import type { SkyEngine } from "@/sky/engine";
 import { AppShell } from "@/components/shell/app-shell";
 import { Reveal, RevealInView } from "@/components/motion/reveal";
@@ -17,6 +17,7 @@ import { formatDec, formatRA, mjdToDate } from "@/sky/coords";
 import { useJson, type ObservationsResponse } from "@/lib/hooks";
 import { buildStatusProvider, type TileStatus } from "@/lib/live";
 import { ScoutPanel } from "@/components/scout/scout-panel";
+import { ChronoLens } from "@/components/chronolens/chronolens";
 import { api, useSession } from "@/lib/session";
 import { rememberRegion } from "@/lib/settings";
 import { OBJECTS } from "@/lib/objects";
@@ -43,6 +44,15 @@ export function RegionView({ order, ipix }: { order: number; ipix: number }) {
   const { user, signIn } = useSession();
   const [saved, setSaved] = useState<boolean | null>(null);
   const [status, setStatus] = useState<TileStatus | null>(null);
+  const [lens, setLens] = useState({ ra: sci5.ra, dec: sci5.dec, label: `${info.id} centre` });
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    const ra = Number(p.get("ra")), dec = Number(p.get("dec"));
+    if (p.get("ra") && Number.isFinite(ra) && Number.isFinite(dec)) {
+      setLens({ ra, dec, label: `${formatRA(ra)} ${formatDec(dec)}` });
+      setTimeout(() => document.getElementById("chronolens")?.scrollIntoView({ behavior: "smooth" }), 700);
+    }
+  }, []);
 
   const onEngine = useCallback((e: SkyEngine | null) => setEngine(e), []);
   useEffect(() => {
@@ -67,6 +77,7 @@ export function RegionView({ order, ipix }: { order: number; ipix: number }) {
     engine?.setLayers({ status: layer });
   }, [engine, layer]);
   useEffect(() => {
+    if (location.hash === "#chronolens") setTimeout(() => document.getElementById("chronolens")?.scrollIntoView({ behavior: "smooth" }), 700);
     if (location.hash === "#science") setTimeout(() => document.getElementById("science")?.scrollIntoView({ behavior: "smooth" }), 600);
   }, []);
 
@@ -196,7 +207,7 @@ export function RegionView({ order, ipix }: { order: number; ipix: number }) {
                 <PanelHeader title="Next steps" />
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {[
-                    { icon: Brain, t: "Spectral Scout", s: "Run our custom SI model", href: `/ai/engine?tile=${order}/${ipix}` },
+                    { icon: Clapperboard, t: "ChronoLens", s: "Watch this spot change", href: "#chronolens" },
                     { icon: FlaskConical, t: "Spectral Lab", s: "Explore wavelengths", href: "#spectral" },
                     { icon: Rocket, t: "Start Mission", s: "Investigate a target", href: `/missions/infrared-detective?tile=${order}/${ipix}` },
                     { icon: BookOpen, t: "Region Guide", s: "Learn what is here", href: "#guide" },
@@ -212,6 +223,21 @@ export function RegionView({ order, ipix }: { order: number; ipix: number }) {
             </Reveal>
           </div>
         </div>
+
+        {/* ---------- ChronoLens: time-lapse motion & change finder ---------- */}
+        <section id="chronolens" className="mt-14 scroll-mt-24">
+          <RevealInView>
+            <SectionTitle
+              eyebrow="ChronoLens · time-lapse of real SPHEREx epochs"
+              title="Watch this patch of sky change over time"
+              desc="SPHEREx maps the whole sky every six months. ChronoLens plays those visits like a little video, spots what moved or changed brightness, tells you what it is — and helps you report anything new. The same flip-between-photos idea found Pluto in 1930."
+              right={<Btn variant="outline" href="/academy"><GraduationCap className="size-3.5" /> Practise in Hunter Academy</Btn>}
+            />
+          </RevealInView>
+          <RevealInView delay={0.06} className="mt-6">
+            <ChronoLens ra={lens.ra} dec={lens.dec} label={lens.label} />
+          </RevealInView>
+        </section>
 
         {/* ---------- spectral lab ---------- */}
         <section id="spectral" className="mt-14 scroll-mt-24">

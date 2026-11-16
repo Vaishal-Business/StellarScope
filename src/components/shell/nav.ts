@@ -2,7 +2,7 @@ export const NAV = [
   { href: "/", label: "Home" },
   { href: "/explore", label: "Explore" },
   { href: "/missions", label: "Missions" },
-  { href: "/blink", label: "Blink" },
+  { href: "/academy", label: "Academy" },
   { href: "/discoveries", label: "Discoveries" },
   { href: "/community", label: "Community" },
   { href: "/ai", label: "SI Researcher" },

@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/demo.mp4": ["./demo.mp4"],
   },
+  async redirects() {
+    return [
+      { source: "/blink/academy", destination: "/academy", permanent: true },
+      { source: "/blink", destination: "/at", permanent: true },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {

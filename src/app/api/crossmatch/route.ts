@@ -33,9 +33,14 @@ async function jpl(ra: number, dec: number, date: string, hw: number) {
   for (let a = 0; a < 3; a++) {
     const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(60_000) });
     if (res.ok) {
-      const j = (await res.json()) as { fields_first?: string[]; data_first_pass?: string[][]; n_first_pass?: number };
-      const f = j.fields_first ?? [];
-      return { date, count: j.n_first_pass ?? (j.data_first_pass?.length ?? 0), objects: (j.data_first_pass ?? []).slice(0, 25).map((r) => Object.fromEntries(f.map((k, i) => [k, r[i]]))) };
+      const j = (await res.json()) as { fields_first?: string[]; data_first_pass?: string[][]; fields_second?: string[]; data_second_pass?: string[][] };
+      // Second pass = precise positions; first pass is a coarse screen over a much wider area.
+      const second = j.data_second_pass && j.fields_second;
+      const f = (second ? j.fields_second : j.fields_first) ?? [];
+      const rows = (second ? j.data_second_pass : j.data_first_pass) ?? [];
+      const normKey = f.findIndex((k) => /Norm/.test(k));
+      const inside = rows.filter((r) => normKey < 0 || Number(r[normKey]) <= hw * 3600 * Math.SQRT2);
+      return { date, count: inside.length, objects: inside.slice(0, 25).map((r) => Object.fromEntries(f.map((k, i) => [k, r[i]]))) };
     }
     await new Promise((s) => setTimeout(s, 1500 * (a + 1)));
   }

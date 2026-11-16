@@ -12,6 +12,7 @@ import { SessionProvider } from "@/lib/session";
 import { AssistantDock, AssistantProvider } from "@/components/assistant/assistant";
 import { readSettings } from "@/lib/settings";
 import { MobileGate } from "@/components/shell/mobile-gate";
+import { Coach } from "@/components/shell/coach";
 
 type Phase = "boot" | "intro" | "splash" | "ready";
 
@@ -44,6 +45,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               <Splash mode={phase === "boot" ? "cover" : phase === "splash" ? "run" : "off"} onDone={() => setPhase("ready")} />
               {children}
               <Suspense fallback={null}>
+                <Coach />
                 <AssistantDock />
               </Suspense>
             </AssistantProvider>

@@ -7,6 +7,7 @@ import { ang2pix } from "@/sky/healpix";
 import { MISSIONS } from "@/lib/missions";
 import { OBJECTS } from "@/lib/objects";
 import { MODULES } from "@/lib/learn";
+import { WORKFLOWS } from "@/lib/workflows";
 import { db } from "@/server/db";
 import { currentUser } from "@/server/auth";
 
@@ -39,12 +40,19 @@ PAGES (use navigate / fly_to / select_tile to take the user there):
 - /discoveries and /discoveries/<slug>: ${OBJECTS.map((o) => o.slug).join(", ")}. Each object page pulls a real spectrum from the cube.
 - /community: rooms, threads linked to tiles, peer-review queue, leaderboard (real database).
 - /lab: the user's saved regions, model runs, submissions, mission progress.
-- /blink: Blink Comparator — loads real multi-epoch SPHEREx L2 exposures for a position (?ra=&dec= or ?tile=order/ipix), blinks or differences epochs per band, auto-detects movers/variables, cross-matches Gaia DR3 + JPL asteroids, links NASA/IRSA tools.
-- /blink/academy: Blink Academy — skill trainer on known movers (Barnard's Star) and variables (R Draconis), live 3D SPHEREx orbit, history of blink discoveries, existing blink submissions.
-- /submit: Submit for review — composer that bundles blink evidence, cross-match, spectrum and a verification checklist.
+- /region/<order>/<ipix>#chronolens: ChronoLens, built into every region page — a time-lapse of real SPHEREx epochs for the region (or any ?ra=&dec=). Play epochs, "What changed" difference view, auto-spotter (sensitivity in σ), Identify (Gaia DR3 + NASA/JPL asteroids), a "What is it?" wiki card (who discovered it, distance, orbit), "Is it real?" checks, light curve and a 3D "Where Earth was" view. /at?ra=&dec= jumps there.
+- /academy: Hunter Academy — scored trainer on known movers (Barnard's Star) and variables (R Draconis, RW Aurigae), challenge fields (WISE 0855−0714, Epsilon Indi B), live 3D SPHEREx orbit, discovery history, existing ChronoLens finds.
+- /submit: Submit for review — composer that bundles ChronoLens evidence, cross-match, spectrum and a verification checklist.
 - /learn/<slug>: ${MODULES.map((m) => m.slug).join(", ")}.
 
 DATA FACTS: HiPS orders 0–5 (order 5 = 12,288 tiles, 12.9″/px HiPS pixels, 512×512 tiles); native detector pixels 6.15″. Frames 50/51 (≈2.40/2.45 µm) are blank. NHITS counts contributing input pixels, not visits. Science cubes are ~320 MB per order-5 tile.
+
+TEACHING & WORKFLOWS: You can teach and operate the entire platform.
+- When the user asks how to do something, or is new, call teach_workflow with the best-fitting workflow; it opens a step-by-step coach that navigates pages and can perform each step. Then summarise the steps in 2-4 bullets.
+- When the user asks you to do it for them, drive it directly: navigate/fly_to/select_tile for the sky, chronolens (with ra/dec to go somewhere; then load → difference → select → crossmatch → submit) for finding moving or changing objects, start_mission for missions, run_spectral_scout for best channels.
+- ChronoLens first loads take 1–2 minutes; tell the user to wait and that later steps (select/crossmatch) work after loading finishes.
+- Workflows available: ${WORKFLOWS.map((w) => `${w.id} — ${w.goal}`).join(" | ")}.
+- Challenge test targets: Barnard's Star, Epsilon Indi B, WISE 0855−0714 (RA 08h55m10.831s Dec −07°14′42.53″), RW Aurigae, R Draconis. Resolve names with resolve_object before using coordinates.
 
 RULES:
 - Use tools for any number, coordinate or data claim. Never invent observations, counts, coordinates or model outputs. If a tool fails, say so.

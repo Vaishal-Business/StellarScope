@@ -33,4 +33,17 @@ export const BLINK_TARGETS: BlinkTarget[] = [
     id: "t445", name: "DR1 tutorial tile (Npix445)", ra: 60.5769, dec: 51.2558, what: "field",
     why: "The official DR1 example field in Camelopardalis. A good control: most residuals here should be noise or artefacts.",
   },
+  {
+    id: "wise0855", name: "WISE 0855−0714", ra: 133.79513, dec: -7.24515, what: "field",
+    why: "The coldest known brown dwarf (~250 K), about 7.4 light-years away and moving ~8″ per year. Very faint at short wavelengths — try the 4.4–5.0 µm band, where it glows.",
+  },
+  {
+    id: "epsindib", name: "Epsilon Indi B", ra: 331.04, dec: -56.79, what: "field",
+    why: "A pair of brown dwarfs orbiting the nearby star Epsilon Indi, 12 light-years away, moving ~4.7″ per year with their parent star.",
+  },
+  {
+    id: "rwaur", name: "RW Aurigae", ra: 76.95642, dec: 30.40142, what: "variable",
+    why: "A young T Tauri star whose brightness dims and recovers as dusty material passes in front of it. Look for a single spot that changes between epochs.",
+    answer: { ra: 76.95642, dec: 30.40142, tolerancePx: 4 },
+  },
 ];

@@ -30,7 +30,7 @@ interface Skill {
   xp: number;
 }
 const SKILL_KEY = "spx-blink-skill";
-const levelOf = (xp: number) => (xp >= 600 ? "Blink Master" : xp >= 300 ? "Sharp Eye" : xp >= 100 ? "Spotter" : "Novice");
+const levelOf = (xp: number) => (xp >= 600 ? "Master Hunter" : xp >= 300 ? "Sharp Eye" : xp >= 100 ? "Spotter" : "Novice");
 
 export function AcademyView() {
   const [targetId, setTargetId] = useState(BLINK_TARGETS[0].id);
@@ -96,10 +96,10 @@ export function AcademyView() {
       <div className="px-5 md:px-8">
         <Reveal delay={0.08}>
           <SectionTitle
-            eyebrow="Blink Academy"
+            eyebrow="Hunter Academy"
             title="Train your eye on real SPHEREx data"
-            desc="Practise on real fields where the answer is known from catalogues, learn where SPHEREx was when it took each exposure, and see how blinking led to some of astronomy's best finds."
-            right={<Btn variant="outline" href="/blink">Open the comparator</Btn>}
+            desc="Practise on real fields where the answer is known from catalogues, learn where SPHEREx was when it took each exposure, and see how comparing images over time led to some of astronomy's best finds."
+            right={<Btn variant="outline" href="/explore">Find a region to hunt in</Btn>}
           />
         </Reveal>
 
@@ -127,7 +127,7 @@ export function AcademyView() {
                   {err && <p className="mt-2 text-[11.5px] text-destructive">{err}</p>}
                 </div>
               ) : frames.length < 2 ? (
-                <p className="mt-4 text-[12px] text-warn">Only {frames.length} epoch available here so far — blinking needs two.</p>
+                <p className="mt-4 text-[12px] text-warn">Only {frames.length} epoch available here so far — time-lapse needs two.</p>
               ) : (
                 <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_200px]">
                   <BlinkCanvas data={frames[idx].img} markers={markers} onPick={pick} />
@@ -137,7 +137,7 @@ export function AcademyView() {
                       <span className="font-mono text-[10.5px] text-white/60">E{frames[idx].epoch} · {mjdToIso(frames[idx].mjd)}</span>
                     </div>
                     {!guess ? (
-                      <p className="text-[12px] text-white/60">Watch the blink, then click the object that {target.what === "mover" ? "moves" : "changes brightness"}.</p>
+                      <p className="text-[12px] text-white/60">Watch the time-lapse, then click the object that {target.what === "mover" ? "moves" : "changes brightness"}.</p>
                     ) : (
                       <div className={cn("rounded-xl border p-3 text-[12px]", correct ? "border-signal/30 bg-signal/[0.06] text-signal" : "border-destructive/30 bg-destructive/[0.06] text-destructive")}>
                         {correct ? <CheckCircle2 className="mb-1 size-4" /> : <XCircle className="mb-1 size-4" />}
@@ -179,7 +179,7 @@ export function AcademyView() {
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           <RevealInView>
             <Panel className="h-full p-5">
-              <PanelHeader title={<span className="flex items-center gap-2"><Award className="size-3.5" /> Who found what by blinking</span>} />
+              <PanelHeader title={<span className="flex items-center gap-2"><Award className="size-3.5" /> Who found what by comparing images</span>} />
               <div className="relative mt-4 space-y-4 pl-6">
                 <span className="absolute bottom-1 left-[7px] top-1 w-px bg-white/10" />
                 {HISTORY.map((h) => (
@@ -194,11 +194,11 @@ export function AcademyView() {
           </RevealInView>
           <RevealInView delay={0.06}>
             <Panel className="h-full p-5">
-              <PanelHeader title="Existing blink detections on StellarScope" meta={blinkFinds.length} />
-              {blinkFinds.length === 0 && <p className="mt-3 text-[12px] text-white/45">No blink submissions yet. Find one in the <Link href="/blink" className="underline">comparator</Link> and it will appear here for others to study and verify.</p>}
+              <PanelHeader title="Existing ChronoLens finds on StellarScope" meta={blinkFinds.length} />
+              {blinkFinds.length === 0 && <p className="mt-3 text-[12px] text-white/45">No ChronoLens submissions yet. Open any region in <Link href="/explore" className="underline">Explore</Link> and use ChronoLens and it will appear here for others to study and verify.</p>}
               <div className="mt-3 space-y-2">
                 {blinkFinds.slice(0, 10).map((s) => (
-                  <Link key={s.id} href={`/blink?tile=${s.tile_order}/${s.tile_ipix}`} className="flex items-center justify-between rounded-xl border border-white/[0.06] px-3 py-2 hover:border-white/20">
+                  <Link key={s.id} href={`/region/${s.tile_order}/${s.tile_ipix}#chronolens`} className="flex items-center justify-between rounded-xl border border-white/[0.06] px-3 py-2 hover:border-white/20">
                     <span>
                       <span className="block text-[12.5px] text-white">{s.interpretation} · SPX-{s.tile_order}-{s.tile_ipix}</span>
                       <span className="block text-[10.5px] text-white/40">{s.author} · {timeAgo(s.created_at)}</span>

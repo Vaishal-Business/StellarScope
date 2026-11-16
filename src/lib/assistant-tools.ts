@@ -2,7 +2,7 @@
  * Tool schema shared by the server (sent to the LLM) and the client (executes UI actions).
  * "server" tools run in /api/assistant with real data; "client" tools drive the user's browser.
  */
-export const CLIENT_TOOLS = ["navigate", "fly_to", "select_tile", "set_wavelength", "set_composite", "toggle_layer", "run_spectral_scout", "open_settings"] as const;
+export const CLIENT_TOOLS = ["navigate", "fly_to", "select_tile", "set_wavelength", "set_composite", "toggle_layer", "run_spectral_scout", "open_settings", "teach_workflow", "chronolens", "start_mission"] as const;
 export type ClientToolName = (typeof CLIENT_TOOLS)[number];
 export interface ClientAction {
   name: ClientToolName;
@@ -11,7 +11,33 @@ export interface ClientAction {
 
 export const LAYER_NAMES = ["imagery", "grid", "tileLabels", "eqGrid", "constellations", "constellationNames", "stars", "starNames", "ecliptic", "galactic"] as const;
 
+import { WORKFLOWS } from "./workflows";
+
 export const TOOL_DEFS = [
+  {
+    type: "function" as const,
+    function: {
+      name: "teach_workflow",
+      description: `Start a hands-on guided workflow: a coach panel walks the user step by step through the real pages and can perform each step. Use whenever the user wants to learn how to do something on the platform. Workflows: ${WORKFLOWS.map((w) => `${w.id} (${w.title})`).join("; ")}. Optional step (0-based) to jump to.`,
+      parameters: { type: "object", properties: { workflow: { type: "string", enum: WORKFLOWS.map((w) => w.id) }, step: { type: "integer" } }, required: ["workflow"] },
+    },
+  },
+  {
+    type: "function" as const,
+    function: {
+      name: "chronolens",
+      description: "Control ChronoLens (time-lapse motion/change finder on region pages). If ra/dec are given, first opens the region at that position. Actions: load (fetch real epochs, 1-2 min first time), play, pause, difference ('What changed' view), frames (play view), detect_on, detect_off, select (candidate number `index`, 1-based), crossmatch (Identify with Gaia + JPL), submit (open Submit for review with evidence). Optional band: all,d1..d6; threshold: sigma 3-10.",
+      parameters: { type: "object", properties: { action: { type: "string", enum: ["load", "play", "pause", "difference", "frames", "detect_on", "detect_off", "select", "crossmatch", "submit"] }, ra: { type: "number" }, dec: { type: "number" }, index: { type: "integer" }, band: { type: "string", enum: ["all", "d1", "d2", "d3", "d4", "d5", "d6"] }, threshold: { type: "number" } }, required: ["action"] },
+    },
+  },
+  {
+    type: "function" as const,
+    function: {
+      name: "start_mission",
+      description: "Open a mission's page so the user can begin it. Slugs: infrared-detective, variable-stars, spectral-anomaly, ice-clouds, moving-sources, planet-nine.",
+      parameters: { type: "object", properties: { slug: { type: "string" } }, required: ["slug"] },
+    },
+  },
   {
     type: "function" as const,
     function: {

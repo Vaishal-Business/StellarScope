@@ -96,7 +96,7 @@ export function SubmitView() {
           <p className="mt-3 text-[13.5px] text-white/55">Submission #{done} is in the community review queue with its full evidence bundle. Two independent verifications mark it verified.</p>
           <div className="mt-8 flex justify-center gap-3">
             <Btn variant="primary" href="/community">Open review queue</Btn>
-            <Btn variant="outline" href="/blink">Blink another field</Btn>
+            <Btn variant="outline" href="/explore">Hunt another region</Btn>
           </div>
         </div>
       </AppShell>
@@ -106,7 +106,7 @@ export function SubmitView() {
     <AppShell>
       <div className="px-5 md:px-8">
         <Reveal delay={0.08}>
-          <SectionTitle eyebrow="Submit for review" title="Package your evidence" desc="Every submission carries the real data behind it — blink epochs, auto-detections, catalogue cross-matches, the calibrated spectrum and your verification checklist — so any reviewer can reproduce it." />
+          <SectionTitle eyebrow="Submit for review" title="Package your evidence" desc="Every submission carries the real data behind it — ChronoLens epochs, auto-detections, catalogue cross-matches, the calibrated spectrum and your verification checklist — so any reviewer can reproduce it." />
         </Reveal>
         <div className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
           <Reveal delay={0.12} className="space-y-4">
@@ -122,7 +122,7 @@ export function SubmitView() {
                   </div>
                 </div>
               ) : (
-                <p className="mt-2 text-[12px] text-white/45">No draft yet — enter a position, or start from the <Link href="/blink" className="underline">Blink comparator</Link>.</p>
+                <p className="mt-2 text-[12px] text-white/45">No draft yet — enter a position, or start from the <Link href="/explore" className="underline">Blink comparator</Link>.</p>
               )}
               <form className="mt-3 flex gap-2" onSubmit={(e) => { e.preventDefault(); const p = parseQuery(q); if (p && "ra" in p) setPos(p); }}>
                 <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="RA Dec (deg or sexagesimal)" className="h-9 flex-1 rounded-full border border-white/10 bg-black/30 px-3 text-[12px] text-white outline-none placeholder:text-white/30" />
@@ -177,7 +177,7 @@ export function SubmitView() {
             <Panel className="p-5">
               <div className="flex items-center gap-2"><Paperclip className="size-4 text-white/50" /><PanelHeader title="Evidence bundle" /></div>
               <div className="mt-3 space-y-0.5">
-                <KV k="Blink band" v={blink?.band ?? "—"} />
+                <KV k="ChronoLens band" v={blink?.band ?? "—"} />
                 <KV k="Epochs compared" v={blink?.compared?.join(" → ") ?? "—"} />
                 <KV k="Detection" v={blink?.candidate ? `${blink.candidate.kind} · ${blink.candidate.snr.toFixed(1)}σ${blink.candidate.arcsecPerDay ? ` · ${(blink.candidate.arcsecPerDay * 365.25).toFixed(1)}″/yr` : ""}` : "—"} />
                 <KV k="Gaia DR3 stars in field" v={cross ? cross.gaiaStarsInField : "—"} />

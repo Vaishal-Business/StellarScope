@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Bot, Cpu, Loader2, MessageCircle, RotateCcw, Send, Sparkles, User, X } from "lucide-react";
 import type { ClientAction } from "@/lib/assistant-tools";
+import { startWorkflow } from "@/lib/workflows";
+import { sendChrono, type ChronoCommand } from "@/components/chronolens/chronolens";
 import { dispatchSky, skyAvailable } from "@/lib/sky-bus";
 import { readSettings, useSettings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
@@ -72,6 +74,21 @@ export function AssistantProvider({ children }: { children: React.ReactNode }) {
           const p = String(a.args.path ?? "/");
           if (p.startsWith("/") && !p.startsWith("//")) router.push(p);
         } else if (a.name === "open_settings") router.push("/settings");
+        else if (a.name === "teach_workflow") startWorkflow(String(a.args.workflow), Number(a.args.step ?? 0) || 0);
+        else if (a.name === "start_mission") router.push(`/missions/${String(a.args.slug).replace(/[^a-z0-9-]/g, "")}`);
+        else if (a.name === "chronolens") {
+          const { ra, dec, action, ...rest } = a.args as { ra?: number; dec?: number; action: ChronoCommand["action"] };
+          const cmd = { action, ...rest } as ChronoCommand;
+          const fire = () => {
+            let n = 0;
+            const t = () => (window.__chronoReady ? sendChrono(cmd) : ++n < 40 && setTimeout(t, 400));
+            t();
+          };
+          if (Number.isFinite(ra) && Number.isFinite(dec)) {
+            router.push(`/at?ra=${ra}&dec=${dec}`);
+            setTimeout(fire, 1500);
+          } else fire();
+        }
         else if (SKY_ACTIONS.has(a.name)) {
           const handled = dispatchSky(a);
           if (!handled && !skyAvailable()) needExplore = true;
