@@ -2,8 +2,6 @@ import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
 
-export const runtime = "nodejs";
-
 const videoPath = `${process.cwd()}/demo.mp4`;
 
 function notFound() {
